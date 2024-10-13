@@ -19,7 +19,7 @@ class LoginAPIView(APIView):
                 return Response(
                 status=status.HTTP_400_BAD_REQUEST,
                 data= {
-                    "message" : "Login in failed, Invalid username or password!",
+                    "message" : "LogIn failed, Invalid username or password!",
                     "data" : []
                 })
             
@@ -33,7 +33,7 @@ class LoginAPIView(APIView):
         return Response(
             status=status.HTTP_400_BAD_REQUEST,
             data= {
-                "message" : "Logged in failed",
+                "message" : "LogIn failed",
                 "data" : serializer.errors
             }
         )
