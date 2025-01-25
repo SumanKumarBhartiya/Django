@@ -1,11 +1,8 @@
-from django.shortcuts import render
-
-# Create your views here.
-from rest_framework.views import APIView
-from authentication.serializers import UserLoginSerializer,UserRegisterSerializer,UserSerializer
-from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.views import APIView
 from django.contrib.auth.models import User
+from rest_framework.response import Response
+from authentication.serializers import UserLoginSerializer,UserRegisterSerializer,UserSerializer
 
 class LoginAPIView(APIView):
     
