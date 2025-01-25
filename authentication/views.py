@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from rest_framework.views import APIView
-from authentication.serializers import UserLoginSerializer,UserRegisterSerializer
+from authentication.serializers import UserLoginSerializer,UserRegisterSerializer,UserSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
@@ -59,5 +59,46 @@ class UserRegisterAPIView(APIView):
             data= {
                 "message" : "User registeration failed",
                 "data" : serializer.errors
+            }
+        )
+    
+class UserDetailAPIView(APIView):
+
+    def get(self, request, id=None):
+
+        if id is not None:
+            try:
+                user = User.objects.get(id=id)
+                user_data = UserSerializer(user).data
+                return Response(
+                    status=status.HTTP_200_OK,
+                    data={
+                        "message" : "Profile details sent successfully",
+                        "data": user_data
+                    }
+                )
+            except User.DoesNotExist:
+                pass
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                "message" : f"User does not exist for user id : {id}",
+                "data": []
+            }
+        )
+    
+class UserListAPIView(APIView):
+
+    def get(self, request):
+
+        user_list = User.objects.all()
+        user_list_data  = UserSerializer(user_list,many=True).data
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                "message": "All profile details sent successfully !!",
+                "data" : user_list_data
             }
         )
